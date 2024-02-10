@@ -15,15 +15,24 @@ jobs:
 
       - name: Check out homepage
         uses: actions/checkout@v4
-
-      - name: Push to website
-        uses: cpina/github-action-push-to-another-repository@v1.7.2
-        env:
-          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
         with:
-          source-directory: web
-          destination-github-username: ${{ github.repository_owner }}
-          destination-repository-name: ${{ github.repository_owner }}.github.io
-          user-name: ${{ github.actor_id }}
-          user-email: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
-          target-branch: main
+          path: homepage
+
+      - name: Check out website
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/${{ github.repository_owner }}.github.io
+          path: website
+          token: ${{ secrets.SSH_DEPLOY_KEY }}
+
+      - name: Update website content
+        run: rsync -av --delete --exclude docs homepage/web/ website
+
+      - name: Deploy website
+        run: |
+          cd website
+          git config user.name "${{ github.actor_id }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git add -A
+          git commit -m "Update from ${{ github.ref }}"
+          git push
