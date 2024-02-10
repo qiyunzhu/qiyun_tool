@@ -2,7 +2,11 @@ name: Deploy nightly build documentation
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - 'main'
+    paths:
+      - 'genordi.py'
+      - 'doc/**'
   workflow_dispatch:
 
 jobs:
