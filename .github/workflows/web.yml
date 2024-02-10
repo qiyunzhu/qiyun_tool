@@ -1,0 +1,29 @@
+name: Deploy homepage
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'web/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out homepage
+        uses: actions/checkout@v4
+
+      - name: Push to website
+        uses: cpina/github-action-push-to-another-repository@v1.7.2
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
+        with:
+          source-directory: web
+          destination-github-username: ${{ github.repository_owner }}
+          destination-repository-name: ${{ github.repository_owner }}.github.io
+          user-name: ${{ github.actor_id }}
+          user-email: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+          target-branch: main
