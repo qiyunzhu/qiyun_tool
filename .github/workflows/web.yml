@@ -23,7 +23,7 @@ jobs:
         with:
           repository: ${{ github.repository_owner }}/${{ github.repository_owner }}.github.io
           path: website
-          token: ${{ secrets.SSH_DEPLOY_KEY }}
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
 
       - name: Update website content
         run: rsync -av --delete --exclude docs homepage/web/ website
