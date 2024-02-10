@@ -26,7 +26,7 @@ jobs:
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
 
       - name: Update website content
-        run: rsync -av --delete --exclude docs homepage/web/ website
+        run: rsync -av --delete --exclude-from homepage/web/.exclude homepage/web/ website
 
       - name: Deploy website
         run: |
