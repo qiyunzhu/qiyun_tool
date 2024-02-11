@@ -14,26 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # - name: Check out package
-      #   uses: actions/checkout@v4
-      #   with:
-      #     path: package
-
-      # - name: Check out website
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: ${{ github.repository_owner }}/${{ github.repository_owner }}.github.io
-      #     path: website
-      #     token: ${{secrets.PUSH_TOKEN}}
-      #   env:
-      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      #     SSH_DEPLOY_KEY: ${{ secrets.SSH_DEPLOY_KEY }}
-
-      # - name: Set up git
-      #   run: |
-      #     git config user.name "GitHub Actions Bot"
-      #     git config user.email "<>"
-
       - name: Check out package
         uses: actions/checkout@v4
 
